@@ -39,8 +39,8 @@
         android:layout_gravity="top|center_horizontal"
         android:layout_weight="1"/>
     <ImageView
-        android:layout_width="64pt"
-        android:layout_height="64pt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_compass"
         android:id="@+id/compass"
         android:adjustViewBounds="false"

@@ -170,8 +170,13 @@ public class JSParser {
 		mEventPendingList = new ArrayList<String>();
 		final List<String> phrases = new ArrayList<String>();
 		int i;
+		mActivity.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				mDisplay.showFace("default");
+			}
+		});
 
-		mDisplay.showFace("default");
 		if (mRobot == null)
 			mDisplay.showMessage("No robot connected", Toast.LENGTH_LONG);
 

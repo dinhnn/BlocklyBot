@@ -80,14 +80,11 @@ public class Display {
 			public void onChange(final float azimuth) {
 				mLayout.post(new Runnable() {
 					public void run() {
-						Log.i(TAG, "will set rotation from " + currectAzimuth + " to "
-								+ azimuth);
-
-						Animation an = new RotateAnimation(-currectAzimuth, -azimuth,
+						float to = -azimuth-45;
+						Animation an = new RotateAnimation(currectAzimuth,to,
 								Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
 								0.5f);
-						currectAzimuth = azimuth;
-
+						currectAzimuth = to;
 						an.setDuration(500);
 						an.setRepeatCount(0);
 						an.setFillAfter(true);
