@@ -25,6 +25,9 @@ android {
         versionCode 4
         versionName '0.5'
         versionNameSuffix 'beta'
+        vectorDrawables{
+	    useSupportLibrary true
+        }
     }
     buildTypes {
         release {

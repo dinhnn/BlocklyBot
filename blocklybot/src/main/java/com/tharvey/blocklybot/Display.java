@@ -28,6 +28,8 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
@@ -43,11 +45,13 @@ public class Display {
 	private ImageView mEyeL;
 	private ImageView mEyeR;
 	private ImageView mMouth;
+	private ImageView arrowView = null;
 	private ObjectAnimator mSpeakAnimation;
 	private boolean mSpeaking;
 	private IEventListener mEventListener;
 	private Toast mToast;
-
+	private Compass compass;
+	private float currectAzimuth = 0;
 	public Display(Activity activity)
 	{
 		mActivity = activity;
@@ -66,7 +70,40 @@ public class Display {
 
 	public void showFace(String style) {
 		Log.i(TAG, "showFace:" + style);
+
 		mLayout = mActivity.getLayoutInflater().inflate(R.layout.display, null);
+		arrowView = (ImageView)mLayout.findViewById(R.id.compass);
+		compass = new Compass(mActivity);
+
+		compass.setListener(new Compass.CompassListener() {
+			@Override
+			public void onChange(final float azimuth) {
+				mLayout.post(new Runnable() {
+					public void run() {
+						Log.i(TAG, "will set rotation from " + currectAzimuth + " to "
+								+ azimuth);
+
+						Animation an = new RotateAnimation(-currectAzimuth, -azimuth,
+								Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+								0.5f);
+						currectAzimuth = azimuth;
+
+						an.setDuration(500);
+						an.setRepeatCount(0);
+						an.setFillAfter(true);
+
+						arrowView.startAnimation(an);
+					}
+				});
+
+//				if (mEventListener != null)
+//					mEventListener.onEvent("azimuth", Float.toString(azimuth));
+			}
+		});
+		compass.start();
+
+
+
 		mEyeL = (ImageView) mLayout.findViewById(R.id.eyeLeft);
 		mEyeR = (ImageView) mLayout.findViewById(R.id.eyeRight);
 		mMouth = (ImageView) mLayout.findViewById(R.id.mouth);
@@ -175,6 +212,7 @@ public class Display {
 
 	}
 
+
 	public void setSpeaking(boolean speaking) {
 		mSpeaking = speaking;
 		if (speaking) {
@@ -201,8 +239,13 @@ public class Display {
 
 	public void hideFace() {
 		Log.i(TAG, "hideFace");
+
 		mLayout.post(new Runnable() {
 			public void run() {
+				if(compass!=null){
+					compass.stop();
+					compass = null;
+				}
 				if (mToast != null)
 					mToast.cancel();
 				mPopup.dismiss();

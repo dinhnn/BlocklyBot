@@ -38,4 +38,12 @@
         android:adjustViewBounds="false"
         android:layout_gravity="top|center_horizontal"
         android:layout_weight="1"/>
+    <ImageView
+        android:layout_width="64pt"
+        android:layout_height="64pt"
+        app:srcCompat="@drawable/ic_compass"
+        android:id="@+id/compass"
+        android:adjustViewBounds="false"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_weight="1"/>
 </LinearLayout>
