@@ -1,0 +1,32 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="302dp"
+    android:height="220dp"
+    android:viewportHeight="110"
+    android:viewportWidth="151">
+    <path
+        android:fillColor="#000"
+        android:pathData="M0,0h151v110h-151z" />
+    <path
+        android:name="mouth"
+        android:fillColor="#00000000"
+        android:pathData="M61.5,76.9h27"
+        android:strokeColor="#0F0"
+        android:strokeLineCap="round"
+        android:strokeWidth="3" />
+    <path
+        android:name="l_eye"
+        android:fillColor="#00000000"
+        android:pathData="M47,63.5c1.38,0 2.5,-1.12 2.5,-2.5S48.38,58.5 47,58.5s-2.5,1.11 -2.5,2.5c0,1.38 1.12,2.5 2.5,2.5z"
+        android:strokeColor="#0F0"
+        android:strokeLineCap="round"
+        android:strokeWidth="5"
+
+        />
+    <path
+        android:name="r_eye"
+        android:fillColor="#00000000"
+        android:pathData="M101.5,64c1.38,0 2.5,-1.12 2.5,-2.5S102.88,59 101.5,59 99,60.11 99,61.5C99,62.88 100.12,64 101.5,64z"
+        android:strokeColor="#0F0"
+        android:strokeLineCap="round"
+        android:strokeWidth="5" />
+</vector>

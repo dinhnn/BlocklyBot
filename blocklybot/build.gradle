@@ -20,7 +20,7 @@ android {
     buildToolsVersion '23.0.3'
     defaultConfig {
         applicationId "com.tharvey.blocklybot"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 4
         versionName '0.5'

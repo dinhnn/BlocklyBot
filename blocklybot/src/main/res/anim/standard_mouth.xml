@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android" android:shareInterpolator="true">
+    <objectAnimator
+        android:duration="300"
+        android:propertyName="translationX"
+        android:valueType="intType"
+        android:valueTo="-5"
+        android:startOffset="1200"
+        />
+    <objectAnimator
+        android:duration="300"
+        android:propertyName="translationX"
+        android:valueType="intType"
+        android:valueTo="10"
+        android:startOffset="300"
+        />
+    <objectAnimator
+        android:duration="300"
+        android:propertyName="translationX"
+        android:valueType="intType"
+        android:valueTo="0"
+        android:startOffset="300"
+        />
+</set>

@@ -20,7 +20,11 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.graphics.drawable.Animatable2;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -35,6 +39,8 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Display {
 	private final static String TAG = Display.class.getSimpleName();
@@ -109,9 +115,8 @@ public class Display {
 		mPopup  = new PopupWindow(mLayout, WindowManager.LayoutParams.MATCH_PARENT,
 				WindowManager.LayoutParams.MATCH_PARENT,true);
 		mPopup.setFocusable(false); // allows event to reach activity below
-		mPopup.setBackgroundDrawable(new BitmapDrawable());
-		mPopup.showAtLocation(mLayout, Gravity.NO_GRAVITY, 100, 100);
-
+		//mPopup.setBackgroundDrawable(new BitmapDrawable());
+		mPopup.showAtLocation(mLayout, Gravity.NO_GRAVITY, 0, 0);
 		mEyeL.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -200,12 +205,28 @@ public class Display {
 			@Override
 			public void onAnimationRepeat(Animator animation) { }
 		});
-		blink.start();
+		//blink.start();
 
 		/* Speaking animation */
 		mSpeakAnimation = ObjectAnimator.ofFloat(mMouth, "scaleY", 1f, 1.75f);
 		mSpeakAnimation.setRepeatCount(ObjectAnimator.INFINITE);
 		mSpeakAnimation.setRepeatMode(ObjectAnimator.REVERSE);
+		final AnimatedVectorDrawable a = (AnimatedVectorDrawable)mActivity.getDrawable(R.drawable.standard_vector);
+		ImageView imageView = (ImageView)mLayout.findViewById(R.id.imageView2);
+		imageView.setVisibility(View.VISIBLE);
+		imageView.setImageDrawable(a);
+		new Timer().scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				mActivity.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						a.start();
+					}
+				});
+
+			}
+		},1000,5000);
 
 	}
 
