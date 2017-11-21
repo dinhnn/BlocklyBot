@@ -25,8 +25,8 @@ android {
         versionCode 4
         versionName '0.5'
         versionNameSuffix 'beta'
-        vectorDrawables{
-	    useSupportLibrary true
+        vectorDrawables {
+            useSupportLibrary true
         }
     }
     buildTypes {
@@ -40,13 +40,16 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.3.+'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
-    compile 'com.android.support:support-v4:24.2.1'
     debugCompile project(':blocklylib-core-debug')
     releaseCompile project(':blocklylib-core-release')
     debugCompile project(':blocklylib-vertical-debug')
     releaseCompile project(':blocklylib-vertical-release')
     compile project(':js')
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.google.android.gms:play-services-vision:11.0.4'
+
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
 }

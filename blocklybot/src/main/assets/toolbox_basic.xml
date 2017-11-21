@@ -29,8 +29,6 @@
             <field name="DIR">turnRight</field>
         </block>
         <block type="robot_emote">
-            <field name="VALUE">1</field>
-            <field name="TYPE">shake</field>
         </block>
         <block type="robot_stop">
         </block>
@@ -56,6 +54,7 @@
         <block type="wait_time">
             <field name="TIME">1</field>
         </block>
+        <block type="wait_face"></block>
         <block type="wait_touch"></block>
         <block type="wait_listen"></block>
         <block type="wait_listen_text">

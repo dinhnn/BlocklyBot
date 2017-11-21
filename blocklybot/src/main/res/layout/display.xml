@@ -1,54 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:weightSum="8">
-    <ImageView
-        android:id="@+id/imageView2"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    >
+    <WebView
+        android:id="@+id/faceId"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center_vertical">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/eye"
-            android:id="@+id/eyeLeft"
-            android:layout_weight="13"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/eye"
-            android:id="@+id/eyeRight"
-            android:layout_weight="13"/>
-    </LinearLayout>
+        android:layout_height="280dp" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/mouth"
-        android:id="@+id/mouth"
-        android:adjustViewBounds="false"
-        android:layout_gravity="top|center_horizontal"
-        android:layout_weight="1"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_compass"
         android:id="@+id/compass"
-        android:adjustViewBounds="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
-        android:layout_weight="1"/>
+        android:adjustViewBounds="false"
+        app:srcCompat="@drawable/ic_compass" />
+    <com.tharvey.blocklybot.vison.camera.CameraSourcePreview
+        android:id="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <com.tharvey.blocklybot.vison.camera.GraphicOverlay
+            android:id="@+id/faceOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.tharvey.blocklybot.vison.camera.CameraSourcePreview>
 </LinearLayout>

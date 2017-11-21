@@ -41,8 +41,8 @@ Blockly.JavaScript['robot_turn_right'] = function(block) {
 };
 
 Blockly.JavaScript['robot_emote'] = function(block) {
-  var value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_NONE) || '0';
-  return 'BlocklyBot.Robot("' + block.getFieldValue('TYPE') + '",' + value + ', \'block_id_' + block.id + '\');\n';
+  var value = block.getFieldValue('VALUE');
+  return 'BlocklyBot.Emotion(' + value + ', \'block_id_' + block.id + '\');\n';
 };
 
 Blockly.JavaScript['robot_stop'] = function(block) {
@@ -50,6 +50,7 @@ Blockly.JavaScript['robot_stop'] = function(block) {
 };
 
 Blockly.JavaScript['robot_repeat_internal'] = Blockly.JavaScript['controls_repeat'];
+
 
 Blockly.JavaScript['speech_speak'] = function(block) {
   return 'BlocklyBot.Speak("' + block.getFieldValue('TEXT') + '", \'block_id_' + block.id + '\');\n';
@@ -172,7 +173,10 @@ Blockly.JavaScript['wait_listen'] = function(block) {
     var value = Blockly.JavaScript.statementToCode(block, 'FUNC')
     return 'BlocklyBot.Wait("' + block.getFieldValue('EVENT') + '", function() {\n' + value + '});\n';
 };
-
+Blockly.JavaScript['wait_face'] = function(block) {
+    var value = Blockly.JavaScript.statementToCode(block, 'FUNC')
+    return 'BlocklyBot.Wait("' + block.getFieldValue('EVENT') + '", function() {\n' + value + '});\n';
+};
 Blockly.JavaScript['wait_listen_text'] = function(block) {
     var value = Blockly.JavaScript.statementToCode(block, 'FUNC')
     return 'BlocklyBot.Wait("listen:' + block.getFieldValue('TEXT') + '", function() {\n' + value + '});\n';

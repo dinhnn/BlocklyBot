@@ -1,0 +1,20 @@
+html,
+body {
+  background-color: black;
+}
+#wk-l-eye,
+#wk-r-eye,
+#sm-mouth-1,
+#sm-mouth-2,
+#sm-mouth-3,
+#st-l-eye,
+#st-r-eye,
+#rg-l-eye,
+#rg-r-eye,
+#hg-l-eye,
+#hg-r-eye,
+#st-mouth,
+#rg-mouth,
+#hr-mouth {
+  visibility: hidden;
+}

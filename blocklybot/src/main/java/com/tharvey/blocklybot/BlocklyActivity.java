@@ -29,6 +29,8 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -96,6 +98,9 @@ public class BlocklyActivity extends AbstractBlocklyActivity implements IConnect
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
 		action = getSupportActionBar();
 		FILE_DIR = getFilesDir();
 		editTextNew = new EditText(this);
@@ -127,12 +132,25 @@ public class BlocklyActivity extends AbstractBlocklyActivity implements IConnect
 		onLoadWorkspace();
 	}
 
+	@Override
+	protected void onResume() {
+		Window window = this.getWindow();
+		window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+		window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+		window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+		super.onResume();
+
+	}
+
 	private final CodeGenerationRequest.CodeGeneratorCallback mCodeGeneratorCallback =
 			new CodeGenerationRequest.CodeGeneratorCallback() {
 				@Override
 				public void onFinishCodeGeneration(final String generatedCode) {
 					Log.i(TAG, "generatedCode:\n" + generatedCode);
-					mParser.parseCode(mRobot, generatedCode, mVariables);
+					//mParser.parseCode(mRobot, generatedCode, mVariables);
+					final Intent intent = new Intent(BlocklyActivity.this, HeadActivity.class);
+					intent.putExtra("script",generatedCode);
+					startActivity(intent);
 				}
 			};
 

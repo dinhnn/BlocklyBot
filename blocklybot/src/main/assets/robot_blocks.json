@@ -221,51 +221,23 @@
     "args0": [
       {
         "type": "field_dropdown",
-        "name": "TYPE",
+        "name": "VALUE",
         "options": [
           [
-            "Shake Hips",
-            "shakeHead"
+            "Normal",
+            "0"
           ],
           [
-            "Bounce",
-            "bounce"
+            "wink",
+            "1"
           ],
           [
-            "Wobble",
-            "wobble"
+            "happy",
+            "2"
           ],
           [
-            "Wobble Left",
-            "wobbleLeft"
-          ],
-          [
-            "Wobble Right",
-            "wobbleRight"
-          ],
-          [
-            "Tap Feet",
-            "tapFeet"
-          ],
-          [
-            "Tap Left Foot",
-            "tapFootLeft"
-          ],
-          [
-            "Tap Right Root",
-            "tapFootRight"
-          ],
-          [
-            "Shake Legs",
-            "shakeLegs"
-          ],
-          [
-            "Shake Right Leg",
-            "shakeLegRight"
-          ],
-          [
-            "Shake Left Leg",
-            "shakeLegLeft"
+            "raging",
+            "3"
           ]
         ]
       }

@@ -223,6 +223,43 @@
     "tooltip": "Wait for a touch event"
   },
   {
+    "type": "wait_face",
+    "message0": "Wait Face %1 %2 %3",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "EVENT",
+        "options": [
+          [
+            "Smile",
+            "face:smile"
+          ],
+          [
+            "Left",
+            "face:left"
+          ],
+          [
+            "Right",
+            "face:right"
+          ],
+          [
+            "Center",
+            "face:center"
+          ]
+        ]
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "input_statement",
+        "name": "FUNC"
+      }
+    ],
+    "colour": 120,
+    "tooltip": "Face command"
+  },
+  {
     "type": "wait_listen",
     "message0": "Wait Voice %1 %2 %3",
     "args0": [

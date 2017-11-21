@@ -46,15 +46,14 @@ import java.util.regex.Pattern;
 /**
  * Class for parsing and executing Javascript code
  */
-public class JSParser {
-	private final static String TAG = JSParser.class.getSimpleName();
+public class ScriptEngine {
+	private final static String TAG = ScriptEngine.class.getSimpleName();
 
-	private Activity mActivity;
+	private RobotActivity mActivity;
 	private Listen mListen;
 	private Speak mSpeak;
 	private Audio mAudio;
 	private Tone mTone;
-	private Display mDisplay;
 	private boolean mRunning;
 	private Mobbob mRobot;
 	private HashMap<String, List<String>> mEventMap;
@@ -63,11 +62,10 @@ public class JSParser {
 	private ObservingDebugger mDebugger;
 	private String[] mCodeLines;
 
-	public JSParser(Activity activity) {
+	public ScriptEngine(RobotActivity activity) {
 		mActivity = activity;
 		mSpeak = new Speak(mActivity);
 		mAudio = new Audio(mActivity);
-		mDisplay = new Display(mActivity);
 		mTone = new Tone();
 		mListen = null;
 	}
@@ -170,15 +168,6 @@ public class JSParser {
 		mEventPendingList = new ArrayList<String>();
 		final List<String> phrases = new ArrayList<String>();
 		int i;
-		mActivity.runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				mDisplay.showFace("default");
-			}
-		});
-
-		if (mRobot == null)
-			mDisplay.showMessage("No robot connected", Toast.LENGTH_LONG);
 
         /* Preparse code:
          *  - remove any root blocks that are not start blocks (TODO: get this done by blockly)
@@ -275,7 +264,7 @@ public class JSParser {
 				return true;
 			}
 		};
-		mDisplay.setListener(eventListener);
+		mActivity.setListener(eventListener);
 
 		// Start voice recognitiong engine
 		if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
@@ -301,7 +290,7 @@ public class JSParser {
 				context.setGeneratingDebug(true);
 				context.setOptimizationLevel(-1);
 				mScope = context.initStandardObjects();
-				ScriptableObject.putProperty(mScope, "BlocklyBot", Context.javaToJS(JSParser.this, mScope));
+				ScriptableObject.putProperty(mScope, "BlocklyBot", Context.javaToJS(ScriptEngine.this, mScope));
 
 				mRunning = true;
 				try {
@@ -324,19 +313,19 @@ public class JSParser {
 				Log.i(TAG, "execution done");
 
 				// wait display to complete (ie script terminated or complete)
-				if (mDisplay.isVisible()) {
-					mDisplay.showMessage("Select Back to exit", Toast.LENGTH_LONG);
-					while (mDisplay.isVisible())
-						SystemClock.sleep(100);
-				}
-				mRunning = false;
+//				if (mDisplay.isVisible()) {
+//					mDisplay.showMessage("Select Back to exit", Toast.LENGTH_LONG);
+//					while (mDisplay.isVisible())
+//						SystemClock.sleep(100);
+//				}
+				//mRunning = false;
 
 				// cleanup
-				Log.i(TAG, "cleanup");
-				if (mRobot != null)
-					doFunction(mRobot, null, Mobbob.commands.STOP.ordinal(), 0);
-				if (mListen != null)
-					mListen.close();
+//				Log.i(TAG, "cleanup");
+//				if (mRobot != null)
+//					doFunction(mRobot, null, Mobbob.commands.STOP.ordinal(), 0);
+//				if (mListen != null)
+//					mListen.close();
 			}
 		};
 		thread.start();
@@ -349,12 +338,6 @@ public class JSParser {
 		else
 			return new String(Thread.currentThread().toString());
 
-	}
-
-	public void cancel() {
-		Log.i(TAG, "cancel()");
-		mDisplay.hideFace();
-		mDebugger.stop();
 	}
 
 	/*
@@ -370,19 +353,19 @@ public class JSParser {
 		if (mRobot != null)
 			doFunction(mRobot, str, 0, val);
 		else {
-			mDisplay.showMessage(str, Toast.LENGTH_SHORT);
+			mActivity.showMessage(str, Toast.LENGTH_SHORT);
 			SystemClock.sleep(1000);
 		}
 	}
 	public void Emotion(int emotion){
 		Log.i(TAG, "emotion(" + emotion + ")");
-		mDisplay.setEmotion(emotion);
+		mActivity.setEmotion(emotion);
 	}
 	public void Speak(String text) {
 		Log.i(TAG, "speak(" + text + ")");
-		mDisplay.setSpeaking(true);
+		mActivity.setSpeaking(true);
 		doFunction(mSpeak, text, 0, 0);
-		mDisplay.setSpeaking(false);
+		mActivity.setSpeaking(false);
 	}
 
 	public void Audio(String text) {
