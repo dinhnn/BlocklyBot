@@ -211,6 +211,7 @@ public class HeadActivity extends RobotActivity implements SensorEventListener {
             }
         }
     }
+    @Override
     public void setEmotion(final int emotion){
         runOnUiThread(new Runnable() {
             public void run() {
@@ -218,6 +219,8 @@ public class HeadActivity extends RobotActivity implements SensorEventListener {
             }
         });
     }
+
+    @Override
     public void setSpeaking(boolean speaking) {
         mSpeaking = speaking;
         if (speaking) {

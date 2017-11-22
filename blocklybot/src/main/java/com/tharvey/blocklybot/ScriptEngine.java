@@ -49,21 +49,21 @@ import java.util.regex.Pattern;
 public class ScriptEngine {
 	private final static String TAG = ScriptEngine.class.getSimpleName();
 
-	private RobotActivity mActivity;
+	private Activity mActivity;
 	private Listen mListen;
 	private Speak mSpeak;
 	private Audio mAudio;
 	private Tone mTone;
 	private boolean mRunning;
-	private Mobbob mRobot;
 	private HashMap<String, List<String>> mEventMap;
 	private List<String> mEventPendingList;
 	private Scriptable mScope;
 	private ObservingDebugger mDebugger;
 	private String[] mCodeLines;
-
-	public ScriptEngine(RobotActivity activity) {
+	private AutoBot robot;
+	public ScriptEngine(Activity activity,AutoBot robot) {
 		mActivity = activity;
+		this.robot = robot;
 		mSpeak = new Speak(mActivity);
 		mAudio = new Audio(mActivity);
 		mTone = new Tone();
@@ -161,8 +161,7 @@ public class ScriptEngine {
 		}
 	}
 
-	public final int parseCode(final Mobbob mobbob, String generatedCode, String[] vars) {
-		mRobot = mobbob;
+	public final int parseCode(String generatedCode, String[] vars) {
 		mListen = null;
 		mEventMap = new HashMap<String, List<String>>();
 		mEventPendingList = new ArrayList<String>();
@@ -264,7 +263,7 @@ public class ScriptEngine {
 				return true;
 			}
 		};
-		mActivity.setListener(eventListener);
+		robot.setListener(eventListener);
 
 		// Start voice recognitiong engine
 		if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
@@ -350,22 +349,22 @@ public class ScriptEngine {
 			Log.i(TAG, Thread.currentThread() + ":robot(" + str + "," + val + ")");
 		if (val < 1)
 			val = 1;
-		if (mRobot != null)
-			doFunction(mRobot, str, 0, val);
+		if (robot != null)
+			doFunction(robot, str, 0, val);
 		else {
-			mActivity.showMessage(str, Toast.LENGTH_SHORT);
+			robot.showMessage(str, Toast.LENGTH_SHORT);
 			SystemClock.sleep(1000);
 		}
 	}
 	public void Emotion(int emotion){
 		Log.i(TAG, "emotion(" + emotion + ")");
-		mActivity.setEmotion(emotion);
+		robot.setEmotion(emotion);
 	}
 	public void Speak(String text) {
 		Log.i(TAG, "speak(" + text + ")");
-		mActivity.setSpeaking(true);
+		robot.setSpeaking(true);
 		doFunction(mSpeak, text, 0, 0);
-		mActivity.setSpeaking(false);
+		robot.setSpeaking(false);
 	}
 
 	public void Audio(String text) {
