@@ -65,7 +65,8 @@
             android:enabled="true" />
 
         <activity android:name=".RobotActivity" />
-        <activity android:name=".HeadActivity"></activity>
+        <activity android:name=".HeadActivity" />
+        <activity android:name=".RemoteControlActivity"></activity>
     </application>
 
 </manifest>
