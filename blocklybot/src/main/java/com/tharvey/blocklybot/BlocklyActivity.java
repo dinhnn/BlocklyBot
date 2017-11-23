@@ -81,18 +81,18 @@ public class BlocklyActivity extends AbstractBlocklyActivity implements IConnect
 	private AlertDialog alertNew, alertRename;
 	private EditText editTextNew, editTextRename;
 	private String workspaceName;
-	static private Mobbob mRobot;
-	static private JSParser mParser;
+	//static private Mobbob mRobot;
+	//static private JSParser mParser;
 	SharedPreferences mPreferences;
 
 	@Override
 	public void onBackPressed() {
 		Log.i(TAG, "onBackPressed()");
-		if (mParser.isBusy()) {
-			mParser.cancel();
-		} else {
+		//if (mParser.isBusy()) {
+		//	mParser.cancel();
+		//} else {
 			super.onBackPressed();
-		}
+		//}
 	}
 
 	@Override
@@ -125,8 +125,8 @@ public class BlocklyActivity extends AbstractBlocklyActivity implements IConnect
 		mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		workspaceName = mPreferences.getString("pref_lastWorkspace", SAVED_WORKSPACE_FILENAME_DEFAULT);
 
-		mParser = new JSParser(this);
-		mRobot = Mobbob.getMobob();
+		//mParser = new JSParser(this);
+		//mRobot = Mobbob.getMobob();
 
         /* Autoload last workspace */
 		onLoadWorkspace();
@@ -141,14 +141,14 @@ public class BlocklyActivity extends AbstractBlocklyActivity implements IConnect
 		super.onResume();
 
 	}
-
+	private boolean runHeadMode = true;
 	private final CodeGenerationRequest.CodeGeneratorCallback mCodeGeneratorCallback =
 			new CodeGenerationRequest.CodeGeneratorCallback() {
 				@Override
 				public void onFinishCodeGeneration(final String generatedCode) {
 					Log.i(TAG, "generatedCode:\n" + generatedCode);
 					//mParser.parseCode(mRobot, generatedCode, mVariables);
-					final Intent intent = new Intent(BlocklyActivity.this, HeadActivity.class);
+					final Intent intent = new Intent(BlocklyActivity.this,runHeadMode?HeadActivity.class:RemoteControlActivity.class);
 					intent.putExtra("script",generatedCode);
 					startActivity(intent);
 				}
@@ -157,7 +157,7 @@ public class BlocklyActivity extends AbstractBlocklyActivity implements IConnect
 	@Override
 	public void connectionStateChanged(connectionStateEnum state) {
 		Log.i(TAG, "connection state changed:" + state);
-		mRobot = Mobbob.getMobob();
+		//mRobot = Mobbob.getMobob();
 		this.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -167,10 +167,10 @@ public class BlocklyActivity extends AbstractBlocklyActivity implements IConnect
 	}
 
 	private void updateTitlebar() {
-		if (mRobot != null && mRobot.getConnectionState() == connectionStateEnum.isConnected)
-			action.setTitle(mRobot.getName() + " : " + workspaceName.replace(".xml", ""));
-		else
-			action.setTitle("Not connected : " + workspaceName.replace(".xml", ""));
+//		if (mRobot != null && mRobot.getConnectionState() == connectionStateEnum.isConnected)
+//			action.setTitle(mRobot.getName() + " : " + workspaceName.replace(".xml", ""));
+//		else
+//			action.setTitle("Not connected : " + workspaceName.replace(".xml", ""));
 		SharedPreferences.Editor editor = mPreferences.edit();
 		editor.putString("pref_lastWorkspace", workspaceName);
 		editor.commit();
@@ -247,14 +247,17 @@ public class BlocklyActivity extends AbstractBlocklyActivity implements IConnect
 			alertNew.show();
 			return true;
 		} else if (id == R.id.action_stop) {
-			mParser.cancel();
+			//mParser.cancel();
 		} else if (id == R.id.action_connect) {
 			DiscoverySelector dialog = new DiscoverySelector(this, this);
 			dialog.showDialog();
 			return true;
+		} else if (id == R.id.action_run) {
+			this.runHeadMode = true;
+			onRunCode();
 		} else if (id == R.id.action_panel) {
-			final Intent intent = new Intent(this, RobotControlActivity.class);
-			startActivity(intent);
+			this.runHeadMode = false;
+			onRunCode();
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -317,8 +320,8 @@ public class BlocklyActivity extends AbstractBlocklyActivity implements IConnect
 	protected void onStop() {
 		Log.d(TAG, "onStop()");
 		super.onStop();
-		if (mRobot != null)
-			mRobot.disconnect();
+//		if (mRobot != null)
+//			mRobot.disconnect();
 	}
 
 	@Override
@@ -328,8 +331,8 @@ public class BlocklyActivity extends AbstractBlocklyActivity implements IConnect
 		editor.putString("pref_defaultView", "blockly");
 		editor.commit();
 		super.onStart();
-		if (mRobot != null)
-			mRobot.connect();
+//		if (mRobot != null)
+//			mRobot.connect();
 	}
 
 	private DialogInterface.OnClickListener newWorkspace = new DialogInterface.OnClickListener() {
