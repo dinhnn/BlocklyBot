@@ -194,96 +194,16 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <com.tharvey.blocklybot.JoystickView
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/joystickView_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="bottom"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/up"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/roundbutton"
-                android:onClick="onClick"
-                android:padding="20dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_arrow_upward_black_24dp"
-                android:textColor="#ffffff" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/roundbutton"
-                android:onClick="onClick"
-                android:padding="20dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_arrow_back_black_24dp"
-                android:textColor="#ffffff" />
-
-            <ImageButton
-                android:id="@+id/stop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/roundbutton"
-                android:onClick="onClick"
-                android:padding="20dp"
-                android:src="@drawable/ic_cancel_black_24dp"
-                android:textColor="#ffffff" />
-
-            <ImageButton
-                android:id="@+id/right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/roundbutton"
-                android:onClick="onClick"
-                android:padding="20dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_arrow_forward_black_24dp"
-                android:textColor="#ffffff" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/down"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/roundbutton"
-                android:onClick="onClick"
-                android:padding="20dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_arrow_downward_black_24dp"
-                android:textColor="#ffffff" />
-        </LinearLayout>
-    </LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="64dp"
+        custom:JV_borderWidth="8dp"
+        custom:JV_backgroundColor="#009688"
+        custom:JV_borderColor="#00796B"
+        custom:JV_buttonColor="#FF6E40"/>
 </LinearLayout>
