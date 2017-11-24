@@ -222,11 +222,12 @@ public class BlocklyActivity extends AbstractBlocklyActivity implements IConnect
 			final Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
 			return true;
+			/*
 		} else if (id == R.id.action_about) {
 			AboutDialog about = new AboutDialog(this);
 			about.setTitle("About this app");
 			about.show();
-			return true;
+			return true;*/
 		} else if (id == R.id.action_load) {
 		    /* Assign workspace selector dialogue for load action */
 			WorkspaceSelector dialog = new WorkspaceSelector(this, FILE_DIR, ".xml");
@@ -246,12 +247,15 @@ public class BlocklyActivity extends AbstractBlocklyActivity implements IConnect
 		} else if (id == R.id.action_new) {
 			alertNew.show();
 			return true;
+			/*
 		} else if (id == R.id.action_stop) {
 			//mParser.cancel();
+
 		} else if (id == R.id.action_connect) {
 			DiscoverySelector dialog = new DiscoverySelector(this, this);
 			dialog.showDialog();
 			return true;
+			*/
 		} else if (id == R.id.action_run) {
 			this.runHeadMode = true;
 			onRunCode();

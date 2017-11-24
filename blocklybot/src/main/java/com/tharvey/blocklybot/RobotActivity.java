@@ -1,10 +1,13 @@
 package com.tharvey.blocklybot;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
-public abstract class RobotActivity extends AppCompatActivity implements AutoBot {
+public abstract class RobotActivity extends AppCompatActivity implements AutoBot,LocationListener,RobotConnector.RobotConnectorListener {
     private String[] variables = {
             "apple",
             "orange",
@@ -20,18 +23,38 @@ public abstract class RobotActivity extends AppCompatActivity implements AutoBot
     }
 
     private ScriptEngine engine;
-
+    private RobotConnector connector;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String script = getIntent().getExtras().getString("script");
         engine = new ScriptEngine(this, this);
+        connector = new RobotConnector(this);
         engine.parseCode(script, variables);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String host = sharedPreferences.getString("robotAddress", "192.168.1.2");
+        connector.connect(host);
+    }
+
+    @Override
+    public void onStatusChanged(RobotConnector.ConnectStatus status) {
+
+    }
+
+    @Override
+    public void onCommandReceived(int command, String arg) {
+        //TODO update xyz
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        connector.disconnect();
         if (mToast != null)
             mToast.cancel();
     }
@@ -86,7 +109,8 @@ public abstract class RobotActivity extends AppCompatActivity implements AutoBot
     private boolean moving;
     private int rotating;
 
-    protected void setLocation(double x, double y, double dir) {
+    @Override
+    public void onLocationChanged(double x, double y, double dir) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -114,6 +138,7 @@ public abstract class RobotActivity extends AppCompatActivity implements AutoBot
     }
 
     protected void control(int leftspeed, int rightspeed) {
+        connector.send(RobotConnector.WHEEL,leftspeed+"x"+rightspeed);
     }
 
     @Override
@@ -156,5 +181,30 @@ public abstract class RobotActivity extends AppCompatActivity implements AutoBot
         moving = false;
         rotating = 0;
         control(0, 0);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode){
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                control(-255,255);
+                break;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                control(255,-255);
+                break;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                control(255,255);
+                break;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                control(-255,-255);
+                break;
+        }
+        return super.onKeyDown(keyCode,event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        control(0,0);
+        return super.onKeyUp(keyCode, event);
     }
 }

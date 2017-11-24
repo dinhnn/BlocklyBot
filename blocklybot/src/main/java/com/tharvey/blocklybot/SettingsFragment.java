@@ -17,6 +17,7 @@
 package com.tharvey.blocklybot;
 
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 public class SettingsFragment extends PreferenceFragment {
@@ -26,5 +27,18 @@ public class SettingsFragment extends PreferenceFragment {
 
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.preferences);
+		Preference.OnPreferenceChangeListener l = new Preference.OnPreferenceChangeListener() {
+
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				String title = preference.getTitle().toString();
+				int pos = title.lastIndexOf(' ');
+				if(pos>0)title = title.substring(0,pos+1);
+				preference.setTitle(title+(((Number)newValue).intValue()+1));
+				return true;
+			}
+		};
+		findPreference("worldWidth").setOnPreferenceChangeListener(l);
+		findPreference("worldHeight").setOnPreferenceChangeListener(l);
 	}
 }

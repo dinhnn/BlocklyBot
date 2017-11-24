@@ -16,4 +16,9 @@
         custom:JV_borderWidth="2dp"
         custom:JV_borderColor="#00796B"
         custom:JV_buttonColor="#80FF6E40"/>
+    <TextView
+        android:id="@+id/robotstatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 </FrameLayout>

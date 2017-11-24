@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import java.util.Random;
 
@@ -32,10 +33,11 @@ public class RemoteControlActivity extends RobotActivity {
     private final static String TAG = "RemoteControl";
     private Camera camera;
     private TagView tagView;
-
+    private int worldWidth;
+    private int worldHeight;
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 77;
     private int has_camera_permissions = 0;
-
+    private TextView robotStatus;
     private void verifyPreferences() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -72,7 +74,8 @@ public class RemoteControlActivity extends RobotActivity {
                 joystick(angle,strength);
             }
         });
-        tagView = new TagView(this);
+        robotStatus = (TextView)findViewById(R.id.robotstatus);
+        tagView = new TagView(this,this);
         tagView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
         tagView.setKeepScreenOn(true);
         View overlay = tagView.getOverlayView();
@@ -80,6 +83,18 @@ public class RemoteControlActivity extends RobotActivity {
         FrameLayout layout = (FrameLayout) findViewById(R.id.remote_frame);
         layout.addView(tagView,0);
         layout.addView(overlay,1);
+    }
+
+    @Override
+    public void onStatusChanged(final RobotConnector.ConnectStatus status) {
+        super.onStatusChanged(status);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                robotStatus.setTextColor(status.getColor());
+                robotStatus.setText(status.name());
+            }
+        });
     }
 
     /** Release the camera when application focus is lost */
@@ -114,6 +129,9 @@ public class RemoteControlActivity extends RobotActivity {
         double decimation = Double.parseDouble(sharedPreferences.getString("decimation_list", "4"));
         double sigma = Double.parseDouble(sharedPreferences.getString("sigma_value", "0"));
         int nthreads = Integer.parseInt(sharedPreferences.getString("nthreads_value", "0"));
+        worldWidth = sharedPreferences.getInt("worldWidth", 9)+1;
+        worldHeight = sharedPreferences.getInt("worldHeight", 9)+1;
+        tagView.setWorldSize(worldWidth,worldHeight);
         String tagFamily = sharedPreferences.getString("tag_family_list", "tag36h11");
         boolean useRear = (sharedPreferences.getString("device_settings_camera_facing", "1").equals("1")) ? true : false;
         Log.i(TAG, String.format("decimation: %f | sigma: %f | nthreads: %d | tagFamily: %s | useRear: %b",
@@ -183,7 +201,7 @@ public class RemoteControlActivity extends RobotActivity {
 
                     // Set flag
                     this.has_camera_permissions = 1;
-                    tagView = new TagView(this);
+                    tagView = new TagView(this,this);
                     tagView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
                     tagView.setKeepScreenOn(true);
                     View overlay = tagView.getOverlayView();

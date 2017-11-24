@@ -45,7 +45,7 @@ public class HeadActivity extends RobotActivity implements SensorEventListener {
         compass.setListener(new Compass.CompassListener() {
             @Override
             public void onChange(final float azimuth) {
-                setLocation(0,0,Math.toDegrees(azimuth));
+                onLocationChanged(0,0,Math.toDegrees(azimuth));
                 runOnUiThread(new Runnable() {
                     public void run() {
                         float to = -azimuth-45;

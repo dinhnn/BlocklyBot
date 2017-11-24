@@ -68,7 +68,7 @@
         <activity android:name=".HeadActivity" />
         <activity android:name=".RemoteControlActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/RemoteControll"
             ></activity>
     </application>
 

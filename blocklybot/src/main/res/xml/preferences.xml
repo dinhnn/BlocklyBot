@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
     <CheckBoxPreference
         android:key="pref_sync"
         android:title="@string/pref_autoattach"
@@ -20,7 +21,20 @@
         android:title="@string/pref_scanBLE"
         android:summary="@string/pref_scanBLE_summ"
         android:defaultValue="true" />
-
+    -->
+    <PreferenceCategory
+        android:title="Robot"
+        android:key="robot">
+        <EditTextPreference
+            android:inputType="text"
+            android:key="robotAddress"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Address"
+            android:defaultValue="192.168.1.2:8888"
+            />
+    </PreferenceCategory>
     <PreferenceCategory
         android:title="AprilTag Processing"
         android:key="pref_cat_processing">
@@ -82,6 +96,22 @@
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
             android:title="@string/pref_title_tag_family" />
+    </PreferenceCategory>
+    <PreferenceCategory
+    android:title="World Size"
+    android:key="pref_cat_world">
+        <SeekBarPreference
+            android:key="worldWidth"
+            android:title="Width: 10"
+            android:summary="Width of World."
+            android:max="19"
+            android:defaultValue="9" />
+        <SeekBarPreference
+            android:key="worldHeight"
+            android:title="Height: 10"
+            android:summary="Height of World."
+            android:max="19"
+            android:defaultValue="9" />
     </PreferenceCategory>
 
     <PreferenceCategory
